@@ -14,5 +14,6 @@ The concept of Greenwich is to provide 1 DataStore, and only 1, so it removes co
 To require Greenwich, simple append the following code to your script:
 
 ```lua
-local Greenwich = require(game:GetSerivce("ServerStorage").Greenwich)
+local ServerStorage = game:GetService("ServerStorage")
+local Greenwich = require(ServerStorage:WaitForChild("Greenwich"))
 ```
