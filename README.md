@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="./assets/icon.png" alt="Greenwich" />
+</p>
+
 # GreenwichDB
 Go back to the start of time, where DataStore's weren't complex.
 
