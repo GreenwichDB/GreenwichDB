@@ -11,12 +11,11 @@ function greenwich:GetDB(name)
     local new = {}
     new.key = name
     coroutine.resume(coroutine.create(function()
-        for k, v in ipairs(dbFunctions) do
+        for k, v in pairs(dbFunctions) do
             new[k] = function(...)
                 local args = { ... }
-                v(new.key, unpack(args))
+                return v(new.key, unpack(args))
             end
-
         end
     end))
     return new
