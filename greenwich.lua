@@ -1,5 +1,6 @@
 --Variables
 local dss = game:GetService("DataStoreService")
+local db = dss:GetDataStore("greenwich")
 
 -- Tables
 local greenwich = {}
@@ -7,16 +8,13 @@ local dbFunctions = {}
 
 --Functions
 function greenwich:GetDB(name)
-    local db = dss:GetDataStore(name)
     local new = {}
-    new.store = db
+    new.key = name
     coroutine.resume(coroutine.create(function()
         for k, v in ipairs(dbFunctions) do
             new[k] = function(...)
-
                 local args = { ... }
-                v(new.store, unpack(args))
-
+                v(new.key, unpack(args))
             end
 
         end
@@ -24,7 +22,7 @@ function greenwich:GetDB(name)
     return new
 end
 
-function dbFunctions:Set(store, key, value)
+function dbFunctions:Set(save_key, key, value)
     return value
 end
 
