@@ -18,7 +18,7 @@ The concept of Greenwich is to provide 1 DataStore, and only 1, so it removes co
 
 ## How does it work?
 
-Simple. We have a `dbFunctions` table and a `grenwich` table. What we do, is define our functions on `dbFunctions`, then when you call `GetDB` iterate through each function and return an instance of it. This means that you don't have to do `dbFunctions:Set("hello", "key", "value")` - simply `Grenwich:GetDB("hello"):Set("key", "value")`
+Simple. We have a `dbFunctions` table and a `greenwich` table. What we do, is define our functions on `dbFunctions`, then when you call `GetDB` iterate through each function and return an instance of it. This means that you don't have to do `dbFunctions:Set("hello", "key", "value")` - simply `Grenwich:GetDB("hello"):Set("key", "value")`
 
 ## Usage
 
