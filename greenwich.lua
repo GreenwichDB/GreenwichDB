@@ -38,5 +38,10 @@ function dbFunctions:Delete(store, key)
     return
 end
 
+function dbFunctions:Has(store, key)
+    store = store.name
+    return not not db:GetAsync(store .. key)
+end
+
 -- Returning everything.
 return greenwich
