@@ -20,6 +20,8 @@ The concept of Greenwich is to provide 1 DataStore, and only 1, so it removes co
 
 Simple. We have a `dbFunctions` table and a `greenwich` table. What we do, is define our functions on `dbFunctions`, then when you call `GetDB` iterate through each function and return an instance of it. This means that you don't have to do `dbFunctions:Set("hello", "key", "value")` - simply just `Grenwich:GetDB("hello"):Set("key", "value")`
 
+**TIP**: If you don't like SentanceCase `dbFunctions`, you can use lowercase. For example: `GetDB("hello"):set("key", "value")`
+
 ## Usage
 
 To require Greenwich, simply append the following code to your script:
