@@ -10,7 +10,7 @@ Go back to the start of time, where DataStore's weren't complex.
 
 ## Installation
 
-Start off by copying [`greenwich.lua`](/greenwich.lua) over to `ServerStorage`. Make sure its a ModuleScript named `Greenwich`.
+Start off by copying [`greenwich.lua`](/greenwich.lua) over to `ServerStorage`. Make sure it's a ModuleScript named `Greenwich`.
 
 ## Concept
 
