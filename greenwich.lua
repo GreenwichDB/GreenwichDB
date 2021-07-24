@@ -16,6 +16,10 @@ function greenwich:GetDB(name)
                 local args = {...}
                 return v(unpack(new), unpack(args))
             end
+            new[string.lower(k)] = function(...)
+                local args = {...}
+                return v(unpack(new), unpack(args))
+            end
         end
     end))
     return new
