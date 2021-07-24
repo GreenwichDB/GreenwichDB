@@ -36,8 +36,14 @@ end
 
 function dbFunctions:Delete(store, key)
     store = store.name
-    db:RemoveAsync(store .. key)
-    return
+    local success, val = pcall(function()
+        return db:RemoveAsync(store .. key)
+    end)
+    if val and success then
+        return true
+    else
+        return false
+    end
 end
 
 function dbFunctions:Has(store, key)
