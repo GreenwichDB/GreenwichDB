@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="./assets/icon.png" alt="Greenwich" />
+  <img src="./assets/icon.png" alt="Greenwich" width="150" height="150" />
 </p>
 
 *Join the [Discord](https://discord.gg/vfn3NJ3TUm) for support and to chat with people.*
