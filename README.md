@@ -3,7 +3,9 @@
   <img src="./assets/icon.png" alt="Greenwich" width="150" height="150" />
 </p>
 
-*Join the [Discord](https://discord.gg/vfn3NJ3TUm) for support and to chat with people.*
+<p align="center">
+<i>Join the <a href="https://discord.gg/vfn3NJ3TUm">Discord</a> for support and to chat with people.</i>
+</p>
 
 # GreenwichDB
 Go back to the start of time, where DataStores weren't complex.
