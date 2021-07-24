@@ -12,14 +12,12 @@ function greenwich:GetDB(name)
     new.name = name
     coroutine.resume(coroutine.create(function()
         for k, v in pairs(dbFunctions) do
-            new[k] = function(...)
+            local fn = function(...)
                 local args = {...}
                 return v(unpack(new), unpack(args))
             end
-            new[string.lower(k)] = function(...)
-                local args = {...}
-                return v(unpack(new), unpack(args))
-            end
+            new[k] = fn
+            new[string.lower(k)] = fn
         end
     end))
     return new
