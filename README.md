@@ -26,9 +26,29 @@ Simple. We have a `dbFunctions` table and a `greenwich` table. What we do, is de
 
 ## Usage
 
-To require Greenwich, simply append the following code to your script:
+To use **Greenwich**, here's a simple showcase down below.
 
 ```lua
+-- Importing Greenwich:
 local ServerStorage = game:GetService("ServerStorage")
 local Greenwich = require(ServerStorage:WaitForChild("Greenwich"))
+
+-- Getting a DataStore:
+local DB = Greenwich:GetDB("names")
+
+-- Setting data:
+DB:Set("noobie", "Absolute gamer")
+
+-- You can use lowercase versions of functions as well:
+DB:set("salvage", "Gamer")
+
+-- Getting data:
+DB:Get("salvage") -- "Gamer"
+
+-- Check for data:
+DB:Has("salvage") -- true
+
+-- Remove data:
+DB:Remove("salvage")
 ```
+
