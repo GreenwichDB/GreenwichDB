@@ -32,5 +32,11 @@ function dbFunctions:Get(store, key)
     return db:GetAsync(store .. key)
 end
 
+function dbFunctions:Delete(store, key)
+    store = store.name
+    db:RemoveAsync(store .. key)
+    return
+end
+
 -- Returning everything.
 return greenwich
