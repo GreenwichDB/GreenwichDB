@@ -5,6 +5,7 @@ local db = dss:GetDataStore("greenwich")
 -- Tables
 local greenwich = {}
 local dbFunctions = {}
+local cache = {}
 
 -- Functions
 function greenwich:GetDB(name)
@@ -25,13 +26,18 @@ end
 
 function dbFunctions:Set(store, key, value)
     store = store.name
+    cache[store .. key] = value
     db:SetAsync(store .. key, value)
     return value
 end
 
 function dbFunctions:Get(store, key)
     store = store.name
-    return db:GetAsync(store .. key)
+    if not not cache[store .. key] then 
+        return cache[store .. key]
+    else
+        return db:GetAsync(store .. key)
+    end
 end
 
 function dbFunctions:Delete(store, key)
@@ -39,6 +45,7 @@ function dbFunctions:Delete(store, key)
     local success, val = pcall(function()
         return db:RemoveAsync(store .. key)
     end)
+    cache[store .. key] = nil
     if val and success then
         return true
     else
@@ -48,7 +55,11 @@ end
 
 function dbFunctions:Has(store, key)
     store = store.name
+    if not not cache[store .. key] then
+        return not not cache[store .. key]
+    else
     return not not db:GetAsync(store .. key)
+    end
 end
 
 -- Returning everything.
