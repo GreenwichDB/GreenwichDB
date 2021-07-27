@@ -36,7 +36,9 @@ function dbFunctions:Get(store, key)
     if not not cache[store .. key] then 
         return cache[store .. key]
     else
-        return db:GetAsync(store .. key)
+        local val = db:GetAsync(store .. key)
+        cache[store .. key] = val
+        return val
     end
 end
 
