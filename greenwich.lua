@@ -101,18 +101,12 @@ function greenwich:EndQueue()
                 v()
             end
         )
-        if e or not s then
-            break
-        else
-            queue = table.remove(queue, 1)
-        end
     end
 end
 
 coroutine.wrap(
     function()
         while true do
-            print(queue)
             if #queue > 0 then
                 for k, v in pairs(queue) do
                     local s, e =
