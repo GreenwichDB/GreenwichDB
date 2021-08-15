@@ -11,7 +11,7 @@ local queue = {}
 -- Helper function
 
 function addToQueue(fn)
-    queue[math.random(1, 10000)] = fn
+    queue[os.time()] = fn
 end
 
 -- Functions
@@ -91,6 +91,15 @@ function dbFunctions:Save(store, key)
         )
         return true
     end
+end
+
+function dbFunctions:Fetch(store, key)
+    store = store.name
+    addToQueue(function()
+        local value = db:GetAsync(store .. key)
+        cache[store .. key] = value
+    end)
+    return true
 end
 
 function greenwich:EndQueue()
