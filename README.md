@@ -14,6 +14,8 @@ Go back to the start of time, where DataStores weren't complex.
 
 Start off by copying [`greenwich.lua`](/greenwich.lua) over to `ServerStorage`. Make sure it's a ModuleScript named `Greenwich`.
 
+If you are using TypeScript with [roblox-ts](https://roblox.ts) - check out [this package](https://npmjs.com/package/@rbxts/greenwichdb)
+
 ## Concept
 
 The concept of Greenwich is to provide one DataStore, and just one, in order to completely removes complications. It's faster and lighter on the server, and provides a simple API.
