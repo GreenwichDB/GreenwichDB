@@ -54,3 +54,13 @@ DB:Has("salvage") -- true
 DB:Remove("salvage")
 ```
 
+## Ensure no data is lost
+
+The Greenwich queue is in memory and will die after the game server shutsdown. Put this in a **server script** to ensure no data is lost.
+
+```lua
+game:BindToClose(function()
+	print("Ending queue..")
+	Greenwich:EndQueue()
+end)
+```
