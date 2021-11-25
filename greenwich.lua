@@ -115,7 +115,7 @@ end
 
 coroutine.wrap(
     function()
-        while true do
+        while wait(10) do
             if #queue > 0 then
                 for k, v in pairs(queue) do
                     local s, e =
@@ -127,14 +127,13 @@ coroutine.wrap(
                     if e or not s then
                         break
                     else
-                        queue = table.remove(queue, 1)
+                        queue[k] = nil
                     end
                 end
             end
-            wait(10)
         end
     end
-)
+)()
 
 -- Returning everything.
 return greenwich
