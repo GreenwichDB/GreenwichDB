@@ -4,8 +4,7 @@ local db = dss:GetDataStore("Greenwich")
 
 -- Tables
 local greenwich = {}
-greenwich.__index = greenwich
-
+local dbFunctions = {}
 local cache = {}
 local queue = {}
 
@@ -16,15 +15,28 @@ function addToQueue(fn)
 end
 
 -- Functions
-function greenwich.GetDB(name)
-    local new = setmetatable({}, greenwich)
+function greenwich:GetDB(name)
+    local new = {}
     new.name = name
-
+    coroutine.resume(
+        coroutine.create(
+            function()
+                for k, v in pairs(dbFunctions) do
+                    local fn = function(...)
+                        local args = {...}
+                        return v(unpack(new), unpack(args))
+                    end
+                    new[k] = fn
+                    new[string.lower(k)] = fn
+                end
+            end
+        )
+    )
     return new
 end
 
-function greenwich:Set(key, value, shouldSave)
-    local store = self.name
+function dbFunctions:Set(store, key, value, shouldSave)
+    store = store.name
     cache[store .. key] = value
     if shouldSave == nil or shouldSave == true then
         addToQueue(
@@ -36,8 +48,8 @@ function greenwich:Set(key, value, shouldSave)
     return value
 end
 
-function greenwich:Get(key)
-    local store = self.name
+function dbFunctions:Get(store, key)
+    store = store.name
     if not (not cache[store .. key]) then
         return cache[store .. key]
     else
@@ -47,8 +59,8 @@ function greenwich:Get(key)
     end
 end
 
-function greenwich:Delete(key)
-    local store = self.name
+function dbFunctions:Delete(store, key)
+    store = store.name
     addToQueue(
         function()
             db:RemoveAsync(store .. key)
@@ -58,8 +70,8 @@ function greenwich:Delete(key)
     return true
 end
 
-function greenwich:Has(key)
-    local store = self.name
+function dbFunctions:Has(store, key)
+    store = store.name
     if not (not cache[store .. key]) then
         return not (not cache[store .. key])
     else
@@ -67,8 +79,8 @@ function greenwich:Has(key)
     end
 end
 
-function greenwich:Save(key)
-    local store = self.name
+function dbFunctions:Save(store, key)
+    store = store.name
     if cache[store .. key] == nil then
         return false
     else
@@ -81,20 +93,18 @@ function greenwich:Save(key)
     end
 end
 
-function greenwich:Fetch(key)
-    local store = self.name
-    addToQueue(
-        function()
-            local value = db:GetAsync(store .. key)
-            cache[store .. key] = value
-        end
-    )
+function dbFunctions:Fetch(store, key)
+    store = store.name
+    addToQueue(function()
+        local value = db:GetAsync(store .. key)
+        cache[store .. key] = value
+    end)
     return true
 end
 
-function greenwich.EndQueue()
-    for _k, v in pairs(queue) do
-        local _s, _e =
+function greenwich:EndQueue()
+    for k, v in pairs(queue) do
+        local s, e =
             pcall(
             function()
                 v()
