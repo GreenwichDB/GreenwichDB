@@ -103,8 +103,8 @@ function dbFunctions:Fetch(store, key)
 end
 
 function greenwich:EndQueue()
-    for k, v in pairs(queue) do
-        local s, e =
+    for _k, v in pairs(queue) do
+        local _s, _e =
             pcall(
             function()
                 v()
@@ -134,6 +134,42 @@ coroutine.wrap(
         end
     end
 )()
+
+game:BindToClose(function()
+	print("[GREENWICHDB/QUEUE] The queue is now ending to ensure that no data is lost.")
+	greenwich:EndQueue()
+end)
+
+--[[
+    An issue was recently brought up that sometimes the cache was not being updated.
+    To reproduce it:
+    Join server A
+    Leave server A
+    Join server B
+    Make some change in the cache
+    Leave server B
+    Join server A
+    As a result of this, you will see the cache not being updated.
+    This fixes it by automatically saving and then just removing them from the cache.
+]]--
+
+game.Players.PlayerRemoving:Connect(function(player)
+    for k: string, _v in pairs(cache) do -- iterate through the cache
+        if string.find(k, player.UserId) then -- check if the key contains the id of the player who left
+            local store = k:gsub(player.UserId, "") -- get the store name from the key
+            local key = k:gsub(store, "") -- get the key it was saved to
+            db:SetAsync(store .. key, cache[store .. key]) -- save data
+            cache[k] = nil -- remove from cache
+        end
+        -- now, we simply repeat this but instead we check for the name
+        if string.find(k, player.Name) then -- check if the key contains the name of the player who left
+            local store = k:gsub(player.Name, "") -- get the store name from the key
+            local key = k:gsub(store, "") -- get the key it was saved to
+            db:SetAsync(store .. key, cache[store .. key]) -- save data
+            cache[k] = nil -- remove from cache
+        end
+    end
+end)
 
 -- Returning everything.
 return greenwich
