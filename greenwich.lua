@@ -153,7 +153,7 @@ end)
     This fixes it by automatically saving and then just removing them from the cache.
 ]]--
 
-game.Players.PlayerRemoving:Connect(function(player)
+game:GetService("Players").PlayerRemoving:Connect(function(player)
     for k: string, _v in pairs(cache) do -- iterate through the cache
         if string.find(k, player.UserId) then -- check if the key contains the id of the player who left
             local store = k:gsub(player.UserId, "") -- get the store name from the key
